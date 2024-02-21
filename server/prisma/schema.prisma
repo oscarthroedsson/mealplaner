@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int             @id @default(autoincrement()) @db.UnsignedInt
+  first_name     String
+  last_name      String
+  age            Int
+  email          String          @unique
+  isMale         Boolean
+  useImperial    Boolean
+  height         Int
+  weight         Int
+  health_goal    Healthgoal
+  goal_tempo     Int
+  activity_level Float
+  bmr            Int
+  energy_intake  Int
+  createdAt      DateTime        @default(now())
+  foodpreference Foodpreference?
+}
+
+model Foodpreference {
+  id                 Int            @id @default(autoincrement()) @db.UnsignedInt
+  userId             Int            @unique @db.UnsignedInt
+  user               User           @relation(fields: [userId], references: [id])
+  pref_MealModels    String
+  meals_PerDayIs     Int
+  pref_CookingTimeIs Json
+  Intolerances       Intolerances[]
+}
+
+model Intolerances {
+  id             Int            @id @default(autoincrement()) @db.UnsignedInt
+  name           String
+  foodpreference Foodpreference @relation(fields: [userId], references: [userId])
+  userId         Int            @db.UnsignedInt
+}
+
+//-----------------------------------  ENUMS  ---------------------------------------------------
+
+//# Enums
+enum Healthgoal {
+  weightloss
+  stabile
+  weightgain
+}

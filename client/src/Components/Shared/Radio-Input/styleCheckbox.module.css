@@ -1,0 +1,6 @@
+.CBinputEl {
+  border-collapse: collapse;
+  outline: none;
+  visibility: hidden;
+  position: absolute;
+}
