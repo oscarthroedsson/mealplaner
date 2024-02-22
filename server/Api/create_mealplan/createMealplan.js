@@ -12,11 +12,11 @@ const apiKey =
 /**
  * @description Take in user object and runs: getRecipeInfo()
  * @param {object} user
- * @returns
+ * @returns {object}
  */
 export const createMealPlan = async (foodpref) => {
   let mealplan = {}; // create a obj where we will put all the meals (breakfast, lunch etc)
-  const typeOfMeal = meals(foodpref.meals_PerDayIs); // Get the num of meals from /data/meals.js
+  const typeOfMyeal = meals(foodpref.meals_PerDayIs); // Get the num of meals from /data/meals.js
 
   // delays so we don´t exceed the max api calls / sec
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -27,7 +27,7 @@ export const createMealPlan = async (foodpref) => {
     try {
       // We fetch 3 alternatives per meal everytime we fetch → Look "number=3" in the URL
       const res = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch${apiKey}&diet=${foodpref.pref_MealModels}&type=${typeOfMeal[j]}&number=3&intolerances=${foodpref.Intolerances}&maxReadyTime=${foodpref.pref_CookingTimeIs.max}`
+        `https://api.spoonacular.com/recipes/complexSearch${apiKey}&diet=${foodpref.pref_MealModels}&type=${typeOfMeal[j].type}&number=3&intolerances=${foodpref.Intolerances}&maxReadyTime=${foodpref.pref_CookingTimeIs.max}`
       );
 
       // Start to create a mealplan if response is OK (withing 200-299 code).
