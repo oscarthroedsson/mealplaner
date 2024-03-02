@@ -1,5 +1,5 @@
 // import { getRecipeInfo } from "../../Services/getRecipeInfo.js";
-import { meals } from "../../data/meals.js";
+import { mealsTwo } from "../../data/meals.js";
 import { getRecipeInfo } from "./recipeInformation.js";
 
 import Debug from "debug";
@@ -16,18 +16,18 @@ const apiKey =
  */
 export const createMealPlan = async (foodpref) => {
   let mealplan = {}; // create a obj where we will put all the meals (breakfast, lunch etc)
-  const typeOfMyeal = meals(foodpref.meals_PerDayIs); // Get the num of meals from /data/meals.js
+  const typeOfMeal = mealsTwo(foodpref.meals_PerDayIs); // Get the num of meals from /data/meals.js
 
   // delays so we don´t exceed the max api calls / sec
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  //    The fetch get IDs for all the meals that is going to be in the mealplan.
+  //The fetch get IDs for all the meals that is going to be in the mealplan.
   //typeOfMeal.length
-  for (let j = 0; j < 1; j++) {
+  for (let i = 0; i < 2; i++) {
     try {
       // We fetch 3 alternatives per meal everytime we fetch → Look "number=3" in the URL
       const res = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch${apiKey}&diet=${foodpref.pref_MealModels}&type=${typeOfMeal[j].type}&number=3&intolerances=${foodpref.Intolerances}&maxReadyTime=${foodpref.pref_CookingTimeIs.max}`
+        `https://api.spoonacular.com/recipes/complexSearch${apiKey}&diet=${foodpref.pref_MealModels}&type=${typeOfMeal[i].type}&number=3&intolerances=${foodpref.Intolerances}&maxReadyTime=${foodpref.pref_CookingTimeIs.max}`
       );
 
       // Start to create a mealplan if response is OK (withing 200-299 code).
@@ -45,9 +45,9 @@ export const createMealPlan = async (foodpref) => {
         Gets the recipie information by the IDs we have generated threw another API
         🛸 hover to see what it does and takes in
         */
-        const newMeal = await getRecipeInfo(ids, apiKey);
+        const newMeal = await getRecipeInfo(ids);
 
-        // if-statement creat or sort the mealplan
+        // if-statement create or sort the mealplan
         /*
          Adding the meal as a key in mealplan object and adds the alternatives as an array to that key ex:
          breakfasts:[
@@ -56,12 +56,12 @@ export const createMealPlan = async (foodpref) => {
           {alt 3},
          ]
          */
-        if (!mealplan[typeOfMeal[j]]) {
+        if (!mealplan[typeOfMeal[i].type]) {
           // adds the meal to the object, if it doesn´t exist, as type of Array
-          mealplan[typeOfMeal[j]] = newMeal;
-        } else if (mealplan[typeOfMeal[j]].length <= 3) {
+          mealplan[typeOfMeal[i].type] = newMeal;
+        } else if (mealplan[typeOfMeal[i].type].length <= 3) {
           // adds a new meal to existing meal
-          mealplan[typeOfMeal[j]].push(newMeal);
+          mealplan[typeOfMeal[i].type].push(newMeal);
         } else {
           //handles if a meal can´t be added
           console.log("We could not add (newMeal)", newMeal, "to the object");
@@ -71,7 +71,7 @@ export const createMealPlan = async (foodpref) => {
         ⛔️ Handles error if res isn´t OK
         */
         const errorResponse = await res.json();
-        console.log("Failed to fetch meals for:", typeOfMeal[j], errorResponse);
+        console.log("Failed to fetch meals for:", typeOfMeal[i], errorResponse);
       }
     } catch (err) {
       // handles error with the API

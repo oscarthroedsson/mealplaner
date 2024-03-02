@@ -2,6 +2,12 @@ import { getNutritionDetails } from "../Api/create_mealplan/getNutritionDetails.
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * @description
+ * @param {object} recipe Takes an recipe obj from: getRecipeInfo() → not modyfied
+ * @returns a re-constructed recipe object
+ */
+
 export async function recipeModel(recipe) {
   return {
     id: recipe.id,
@@ -17,8 +23,20 @@ export async function recipeModel(recipe) {
       return {
         id: element.id,
         ingridientName: element.nameClean,
-        amount: Math.round(element.measures.metric.amount / recipe.servings), //get metric value
-        unitShort: element.measures.metric.unitShort, //get metric value
+        amount: {
+          imperial: {
+            amount: Number(
+              element.measures.us.amount / recipe.servings
+            ).toFixed(1),
+            unit: element.measures.us.unitShort,
+          },
+          metric: {
+            amount: Number(
+              element.measures.metric.amount / recipe.servings
+            ).toFixed(1),
+            unit: element.measures.metric.unitShort,
+          },
+        },
       };
     }),
   };

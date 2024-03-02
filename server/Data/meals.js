@@ -17,6 +17,7 @@ export const meals = (numOfMeals) => {
       return ["breakfast", "lunch", "snack", "dinner"];
   }
 };
+
 export const mealsTwo = (numOfMeals) => {
   switch (numOfMeals) {
     case 1:
