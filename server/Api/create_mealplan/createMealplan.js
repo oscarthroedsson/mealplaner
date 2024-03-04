@@ -1,29 +1,27 @@
 // import { getRecipeInfo } from "../../Services/getRecipeInfo.js";
-import { mealsTwo } from "../../data/meals.js";
+import { customizePortionModal } from "../../Models/customizePortionModal.js";
+import { delay } from "../../Tools/delay.js";
+import { meals } from "../../data/meals.js";
 import { getRecipeInfo } from "./recipeInformation.js";
 
 import Debug from "debug";
 // Create a new debug instance
 const debug = Debug("📁 Server: createMealPlan.js | 💬: ");
 
-const apiKey =
-  process.env.API_KEY || "?apiKey=70b1469bc39d4fbcadbf282a070d81ac";
+const apiKey = process.env.API_KEY || "?apiKey=70b1469bc39d4fbcadbf282a070d81ac";
 
 /**
  * @description Take in user object and runs: getRecipeInfo()
  * @param {object} user
  * @returns {object}
  */
-export const createMealPlan = async (foodpref) => {
+export const createMealPlan = async (foodpref, energyNeed) => {
   let mealplan = {}; // create a obj where we will put all the meals (breakfast, lunch etc)
-  const typeOfMeal = mealsTwo(foodpref.meals_PerDayIs); // Get the num of meals from /data/meals.js
-
-  // delays so we don´t exceed the max api calls / sec
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const typeOfMeal = meals(foodpref.meals_PerDayIs, energyNeed); // Get the num of meals from /data/meals.js
 
   //The fetch get IDs for all the meals that is going to be in the mealplan.
   //typeOfMeal.length
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 1; i++) {
     try {
       // We fetch 3 alternatives per meal everytime we fetch → Look "number=3" in the URL
       const res = await fetch(
@@ -77,8 +75,10 @@ export const createMealPlan = async (foodpref) => {
       // handles error with the API
       console.log("Error with API: ", err);
     }
-    await delay(500); //! We have limit of 5 calls/sec, we need to delay the next fetch call.
+    await delay(500);
   }
+
+  mealplan = await customizePortionModal(mealplan, typeOfMeal);
 
   return mealplan;
 };

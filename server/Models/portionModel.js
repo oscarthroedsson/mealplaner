@@ -6,20 +6,22 @@
  */
 
 export function portionModel(nutrient, servings) {
+  console.log("NUTRIENTT: ", nutrient);
   return {
     calories: Math.round(Number(nutrient.calories)),
     protein: Math.round(Number(nutrient.protein.split(/(?<=\d)(?=[a-z])/i)[0] / servings)),
     carbs: {
       total: Math.round(Number(nutrient.carbs.split(/(?<=\d)(?=[a-z])/i)[0]) / servings),
       sugars: {
-        amount: (
-          Number(nutrient.bad.find((sugers) => sugers.title === "Sugar").amount.replace(/[a-z]+/i, "")) / servings
-        ).toFixed(2),
+        amount:
+          Number(nutrient.bad.find((sugars) => sugars.title === "Sugar").amount.split(/(?<=\d)(?=[a-z])/i)[0]).toFixed(
+            2
+          ) / servings,
         type: nutrient.bad.find((sugers) => sugers.title === "Sugar").amount.split(/(?<=\d)(?=[a-z])/i)[1],
       },
     },
     fat: {
-      total: Number(nutrient.fat.split(/(?<=\d)(?=[a-z])/i)[0] / servings).toFixed(2),
+      total: Math.round(Number(nutrient.fat.split(/(?<=\d)(?=[a-z])/i)[0] / servings).toFixed(2)),
       saturatedFat: {
         amount:
           Number(

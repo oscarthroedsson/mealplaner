@@ -25,15 +25,11 @@ export async function recipeModel(recipe) {
         ingridientName: element.nameClean,
         amount: {
           imperial: {
-            amount: Number(
-              element.measures.us.amount / recipe.servings
-            ).toFixed(1),
+            amount: element.measures.us.amount / recipe.servings,
             unit: element.measures.us.unitShort,
           },
           metric: {
-            amount: Number(
-              element.measures.metric.amount / recipe.servings
-            ).toFixed(1),
+            amount: element.measures.metric.amount / recipe.servings,
             unit: element.measures.metric.unitShort,
           },
         },
