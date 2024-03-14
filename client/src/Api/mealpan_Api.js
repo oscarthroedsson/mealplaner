@@ -17,6 +17,8 @@ import { getCookieUser } from "../config/cookies/cookie_config";
  * @param {obj} userData
  */
 export const createMealplan = async (userData = "") => {
+  console.log("createMealplan | was initiated");
+  //if no userData was sent in
   if (!userData) {
     try {
       userData = await getCookieUser();
@@ -26,17 +28,18 @@ export const createMealplan = async (userData = "") => {
   }
 
   try {
-    await fetch(`http://localhost:3000/mealplan/create`, {
+    const response = await fetch(`http://localhost:3000/mealplan/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
     });
+
+    const mealplan = await response.json();
+
+    console.log("🥫 mealplan: ", mealplan);
   } catch (err) {
-    console.log(
-      "createMealplan | fetch mealplan/create| Something went wrong: ",
-      err
-    );
+    console.log("createMealplan | fetch mealplan/create| Something went wrong: ", err);
   }
 };
