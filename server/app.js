@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import routes from "./routes/index.js";
+import "./Database/mongoDB.js";
 import { config } from "dotenv";
 config();
 import cookieParser from "cookie-parser";
