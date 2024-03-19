@@ -24,6 +24,8 @@ export const createMealPlan = async (foodpref, energyNeed) => {
   for (let i = 0; i < 1; i++) {
     try {
       // We fetch 3 alternatives per meal everytime we fetch → Look "number=3" in the URL
+      // 🍎  This should be replaced with a function that checks so we dont get the same IDs
+
       const res = await fetch(
         `https://api.spoonacular.com/recipes/complexSearch${apiKey}&diet=${foodpref.pref_MealModels}&type=${typeOfMeal[i].type}&number=3&intolerances=${foodpref.Intolerances}&maxReadyTime=${foodpref.pref_CookingTimeIs.max}`
       );

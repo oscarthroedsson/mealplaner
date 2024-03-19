@@ -1,6 +1,6 @@
 export function customizePortionModal(mealplan, typeOfMeal) {
-  console.log("🥫 customizePortionModal was run");
-  console.log("👴🏼 | OLD MEALPLAN: ", mealplan);
+  // console.log("🥫 customizePortionModal was run");
+  // console.log("👴🏼 | OLD MEALPLAN: ", mealplan);
 
   // TODO | Kolla vilka keys som ska gångas och vad som ska loopas
 
@@ -50,6 +50,6 @@ export function customizePortionModal(mealplan, typeOfMeal) {
     // 🚦 | End of Object.keys...
   });
 
-  console.log("🏁 | NEW MEALPLAN: ", mealplan);
+  // console.log("🏁 | NEW MEALPLAN: ", mealplan);
   return mealplan;
 }

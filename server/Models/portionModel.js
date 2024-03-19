@@ -6,7 +6,6 @@
  */
 
 export function portionModel(nutrient, servings) {
-  console.log("NUTRIENTT: ", nutrient);
   return {
     calories: Math.round(Number(nutrient.calories)),
     protein: Math.round(Number(nutrient.protein.split(/(?<=\d)(?=[a-z])/i)[0] / servings)),
