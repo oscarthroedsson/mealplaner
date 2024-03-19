@@ -1,4 +1,5 @@
 export const registerUser = async (userData) => {
+  console.log("registerUser | userData: ", userData);
   const response = await fetch(`http://localhost:3000/user/register`, {
     method: "POST",
     headers: {

@@ -69,6 +69,8 @@ export default function ProfilModal() {
       isMale,
       useImperial,
     });
+    console.log("ProfilModal | handleClick() | energyIntake:", energyIntake);
+    console.log("ProfilModal | handleClick() | bmr:", bmr);
 
     //createing user
     const user = {
@@ -88,7 +90,7 @@ export default function ProfilModal() {
     };
 
     const userData = await registerUser(user);
-    console.log("userDATA FROM SERVER TO CLIENT: ", userData);
+    console.log("ProfilModal | userData: ", userData);
     await storeCookieUser(userData.data);
     next();
   }
@@ -98,8 +100,7 @@ export default function ProfilModal() {
       <div className="mb-10">
         <h1>Profil Information</h1>
         <p className="w-full md:max-w-96">
-          To create your tailored meal plan, please share a bit about yourself
-          with us!
+          To create your tailored meal plan, please share a bit about yourself with us!
         </p>
       </div>
 
@@ -257,9 +258,7 @@ export default function ProfilModal() {
                 }}
                 type="number"
                 checked={weightIs}
-                placeholder={
-                  useImperial === true ? "Weight in lbs" : "Weight in kg"
-                }
+                placeholder={useImperial === true ? "Weight in lbs" : "Weight in kg"}
               />
             </div>
 
@@ -287,8 +286,7 @@ export default function ProfilModal() {
                     value: 1.725,
                   },
                   {
-                    textContent:
-                      "Mycket tung motion (2 gånger per dag, extra tungt)",
+                    textContent: "Mycket tung motion (2 gånger per dag, extra tungt)",
                     value: 1.9,
                   },
                 ]}
@@ -333,13 +331,11 @@ export default function ProfilModal() {
                 text="Choose tempo"
                 options={[
                   {
-                    textContent:
-                      useImperial === true ? "1 pound week" : "0.5 kg week",
+                    textContent: useImperial === true ? "1 pound week" : "0.5 kg week",
                     value: goalIs == "weightgain" ? 500 : -500,
                   },
                   {
-                    textContent:
-                      useImperial === true ? "2 pound week" : "1 kg week",
+                    textContent: useImperial === true ? "2 pound week" : "1 kg week",
                     value: goalIs == "weightgain" ? 1000 : -1000,
                   },
                 ]}
