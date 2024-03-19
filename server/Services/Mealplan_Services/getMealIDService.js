@@ -69,6 +69,7 @@ export const getMealIds = async (foodpref, typeOfMeals) => {
   };
 
   if (foodpref) {
+    console.log("foodpref är sant");
     await runAPi();
     await findIdenicals();
 

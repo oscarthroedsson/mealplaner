@@ -2,11 +2,9 @@ export function customizePortionModal(mealplan, typeOfMeal) {
   // console.log("🥫 customizePortionModal was run");
   // console.log("👴🏼 | OLD MEALPLAN: ", mealplan);
 
-  // TODO | Kolla vilka keys som ska gångas och vad som ska loopas
-
   // Loopa igenom varje måltidstyp (breakfast, lunch, snack, dinner)
   Object.keys(mealplan).forEach((mealType, index) => {
-    // Hämta recepten för den aktuella måltidstypen
+    // Get out the recipes for the relevant meal
     const recipes = mealplan[mealType];
 
     recipes.forEach((key) => {
