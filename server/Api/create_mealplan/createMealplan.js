@@ -1,5 +1,6 @@
 // import { getRecipeInfo } from "../../Services/getRecipeInfo.js";
 import { customizePortionModal } from "../../Models/customizePortionModal.js";
+import { getMealIds } from "../../Services/Mealplan_Services/getMealIDService.js";
 import { delay } from "../../Tools/delay.js";
 import { meals } from "../../data/meals.js";
 import { getRecipeInfo } from "./recipeInformation.js";
@@ -21,7 +22,12 @@ export const createMealPlan = async (foodpref, energyNeed) => {
 
   //The fetch get IDs for all the meals that is going to be in the mealplan.
   //typeOfMeal.length
-  for (let i = 0; i < 1; i++) {
+  const mealsToSearch = await getMealIds(foodpref, typeOfMeal);
+
+  console.log("🌞 screateMealPlan | typeOfMeal: ", typeOfMeal);
+  console.log("🌴 screateMealPlan | meals: ", mealsToSearch);
+
+  for (let i = 0; i < typeOfMeal.length; i++) {
     try {
       // We fetch 3 alternatives per meal everytime we fetch → Look "number=3" in the URL
       // 🍎  This should be replaced with a function that checks so we dont get the same IDs
