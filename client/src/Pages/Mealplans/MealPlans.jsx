@@ -9,10 +9,9 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 // Components
 import PrimeButton from "../../Components/Shared/Buttons/PrimeButton.jsx";
-import Navbar from "../../Components/shared/Navbar/Navbar.jsx";
 import SecondaryButton from "../../Components/Shared/Buttons/SecondaryButton.jsx";
-import MealPlanThumbNail from "../../Components/MealPlanThumbnail";
-import { useSearchParams } from "next/navigation";
+import { getCookieUser } from "../../config/cookies/cookie_config.js";
+import { getMealplans } from "../../Api/mealpan_Api.js";
 
 /*
 KOMPONENTEN SKA GENERERA ALLA KOSTPLANER SOM HAR GENERERATS TILL ANVÄNDAREN
@@ -23,29 +22,27 @@ Just nu kör vi APIet här för att vi ska kunna generera kostprogram och visa p
 
 export default function MealPlans() {
   const [showPersonalInfo, setShowPersonalInfo] = useState(false);
+  let user;
+  let mealplans;
 
-  useEffect(() => {
-    const piss = {
-      diet: "vegeterian",
-      type: ["breakfast", "snack", "dinner"],
-      number: "3",
-      intolerances: "milk",
-      excludeIngredients: "peanut",
-      maxReadyTime: "20",
-    };
+  const getData = async () => {
+    user = await getCookieUser();
 
-    const getMeals = async () => {
-      // return await createMealPlan(piss);
-    };
-  }, []);
+    if (user) {
+      console.log("User True", user.id);
+      mealplans = await getMealplans(user.id);
+    } else {
+      console.log("render error");
+    }
+  };
+  getData();
 
   return (
     <>
-      <Navbar />
       <main className="flex flex-col gap-10">
-        <div className="flex place-content-between my-6 sm:place-content-end sm:gap-6">
-          <PrimeButton textContent="Generate meal plan" href="#" />
-          <SecondaryButton textContent="Build a meal plan" href="#" />
+        <div className="flex flex-col gap-4 place-content-between my-6 sm:place-content-end sm:gap-6">
+          <PrimeButton textContent="Build a meal plan" href="#" />
+          <SecondaryButton textContent="Generate a mealplan" href="#" />
         </div>
 
         <section className="flex flex-col gap-9 text-txtColor">
@@ -83,9 +80,13 @@ export default function MealPlans() {
                 <p className="text-sm">Mediocre</p>
               </div>
             </div>
+            {mealplans && (
+              <>
+                <h1>Mealplans är true</h1>
+                <p>just so you know</p>
+              </>
+            )}
           </div>
-
-          <MealPlanThumbNail />
         </section>
       </main>
     </>

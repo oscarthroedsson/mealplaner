@@ -7,9 +7,12 @@ import UserModal from "../../Components/Modals/UserModal.jsx";
 import { useState } from "react";
 import { doesCookieUser } from "../../config/cookies/cookie_config.js";
 import { createMealplan } from "../../Api/mealpan_Api.js";
+import { useNavigate } from "react-router-dom";
 
+// hooks
 export default function HomePage() {
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   /*
   Checks in cookies if the user have used our page before, if so we take userinfo out. 
@@ -18,14 +21,20 @@ export default function HomePage() {
 
   async function handleClick() {
     const userData = await doesCookieUser();
+
     console.log("doesUserExist: ", userData);
 
     if (userData) {
-      const mealplan = await createMealplan(userData);
+      const response = await createMealplan(userData);
+      console.log("response: ", response);
+      const mealplan = response.data;
 
-      // todo ✏️ | skapa kostplan
-      // todo ✏️ | redirect till kostplanen -> validera kostplan i json, ok? -> Bygg meal plans sidan -> Connecta att man får sin kostplan när man kommer in på mealplans
-      //!     ⛔️ | Innan du connectar ska kostplanen som skapas läggas in i mongo
+      const boolean = Boolean(mealplan);
+      console.log("BOOLEAN: ", boolean);
+      if (mealplan) {
+        console.log("should navigate to Mealplans");
+        navigate("/mealplans");
+      }
     } else {
       setShowModal(!showModal);
     }

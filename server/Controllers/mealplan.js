@@ -8,6 +8,7 @@ export const destroy = async (req, res) => {};
 
 import { createMealPlan } from "../Api/create_mealplan/createMealplan.js";
 import { getFoodPreference } from "../Services/Foodpreference_Services/foodpreferenceServices.js";
+import { getMealplans } from "../Services/Mealplan_Services/getMealplan.js";
 import { storeMealplan } from "../Services/Mealplan_Services/storeMealplan.js";
 import { getUser } from "../Services/User_Services/userServices.js";
 
@@ -34,11 +35,25 @@ export const create = async (req, res) => {
     await storeMealplan(mealplan);
 
     res.send({
-      message: `sucsess`,
-      route: "/mealplan -> store",
+      message: `success`,
+      code: 200,
+      route: "/mealplan",
       data: mealplan,
     });
   } catch (err) {
     console.log("getFoodPreference | Error: ", err);
+  }
+};
+
+export const show = async (req, res) => {
+  const userId = req.body.userId;
+  console.log("show mealplans was initiatetd");
+  console.log("show | userId: ", userId);
+
+  try {
+    const mealplans = await getMealplans(userId);
+    console.log("🥘 mealplans:", mealplans);
+  } catch (err) {
+    console.log("show | errors");
   }
 };

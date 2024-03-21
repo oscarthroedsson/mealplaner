@@ -1,7 +1,7 @@
 export default function PrimButton({ textContent, onClick }) {
   //TODO ÄNDRA SÅ LINK ÄR KNAPPEN OCH INTE HAR EN KNAPP INOM SIG,  KNAPPAR SKA  ALLTID HA ONCLICK
 
-  if (!textContent || !onClick) {
+  if (!textContent) {
     textContent = "incomplete props";
   }
 

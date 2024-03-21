@@ -1,6 +1,6 @@
 export default function SecondaryButton({ textContent, href, onClick }) {
-  if (!textContent || !href || !onClick) {
-    (textContent = "incomplete props"), (href = "#");
+  if (!textContent) {
+    textContent = "incomplete props";
   }
 
   if (onClick) {

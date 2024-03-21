@@ -38,8 +38,31 @@ export const createMealplan = async (userData = "") => {
 
     const mealplan = await response.json();
 
-    console.log("🥫 mealplan: ", mealplan);
+    if (mealplan) {
+      return mealplan;
+    } else {
+      console.log("Error getting mealplan");
+    }
   } catch (err) {
-    console.log("createMealplan | fetch mealplan/create| Something went wrong: ", err);
+    console.log("createMealplan | Something went wrong fetching mealplan ", err);
+  }
+};
+
+export const getMealplans = async (userId) => {
+  console.log("getMealplans | was initiated");
+
+  try {
+    const response = await fetch(`http://localhost:3000/mealplan/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+      }),
+    });
+    const mealplans = response.json();
+  } catch (err) {
+    console.log("err: ", err);
   }
 };
