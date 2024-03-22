@@ -61,7 +61,14 @@ export const getMealplans = async (userId) => {
         userId,
       }),
     });
-    const mealplans = response.json();
+    const mealplans = await response.json();
+
+    if (mealplans) {
+      console.log("mealplans was returned");
+      return mealplans.data;
+    } else {
+      console.log("handle Error");
+    }
   } catch (err) {
     console.log("err: ", err);
   }

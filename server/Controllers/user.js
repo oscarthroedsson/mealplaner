@@ -17,8 +17,6 @@ export const index = async (req, res) => {
 export const storeUser = async (req, res) => {
   console.log("controller");
   const userData = req.body;
-  console.log("SERVER | userData: ", userData);
-
   const validatedUser = await userGenerator(userData);
 
   try {
@@ -35,4 +33,8 @@ export const storeUser = async (req, res) => {
       message: err,
     });
   }
+};
+
+export const showUser = (userId) => {
+  return getUser(userId, false);
 };

@@ -6,7 +6,7 @@ export const getMealplans = async (userId) => {
   if (userId) {
     try {
       const mealplans = await mongo.find({ "mealplan.userId": userId }).toArray();
-      console.log("🐟 mealplans: ", mealplans);
+      console.log("🐟 mealplans was fetched ");
       return mealplans;
     } catch (err) {
       console.log("getMealplan | err:", err);

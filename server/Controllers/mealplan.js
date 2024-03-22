@@ -6,6 +6,8 @@ export const update = async (req, res) => {};
 export const destroy = async (req, res) => {};
 */
 
+import moment from "moment";
+
 import { createMealPlan } from "../Api/create_mealplan/createMealplan.js";
 import { getFoodPreference } from "../Services/Foodpreference_Services/foodpreferenceServices.js";
 import { getMealplans } from "../Services/Mealplan_Services/getMealplan.js";
@@ -32,6 +34,7 @@ export const create = async (req, res) => {
 
     const mealplan = await createMealPlan(foodPref, energyNeed);
     mealplan.userId = userId; // add the users ID to the whole mealplan
+    mealplan.createdAt = moment().format("YYYY-MM-DD"); // gives time when mealplan is created
     await storeMealplan(mealplan);
 
     res.send({
@@ -47,13 +50,38 @@ export const create = async (req, res) => {
 
 export const show = async (req, res) => {
   const userId = req.body.userId;
-  console.log("show mealplans was initiatetd");
-  console.log("show | userId: ", userId);
 
-  try {
-    const mealplans = await getMealplans(userId);
-    console.log("🥘 mealplans:", mealplans);
-  } catch (err) {
-    console.log("show | errors");
+  if (!userId) {
+    res.status(400).send({
+      message: "error",
+      code: 400,
+      data: "Invalid user ID format or not a number",
+    });
+  }
+
+  // check if user exist
+  const validateUser = await getUser(userId, false);
+
+  if (validateUser) {
+    try {
+      const mealplans = await getMealplans(userId);
+
+      if (mealplans) {
+        console.log("🥘 MEALPLAN WAS TRUE");
+        res.status(200).send({
+          message: `success`,
+          code: 200,
+          data: mealplans,
+        });
+      }
+    } catch (err) {
+      console.log("show | errors");
+    }
+  } else {
+    res.status(400).send({
+      message: "error",
+      code: 400,
+      data: "User Could not be found",
+    });
   }
 };
