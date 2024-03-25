@@ -85,7 +85,6 @@ export const show = async (req, res) => {
       const mealplans = await getMealplans(userId);
 
       if (mealplans) {
-        console.log("🥘 MEALPLAN WAS TRUE");
         res.status(200).send({
           message: `success`,
           code: 200,
@@ -105,12 +104,8 @@ export const show = async (req, res) => {
 };
 
 export const destroy = async (req, res) => {
-  console.log("req.body: ", req.body);
   const userId = req.body.userId;
   const mealplanID = req.body.mealplanID;
-
-  console.log("userId: ", userId);
-  console.log("mealplanID: ", mealplanID);
 
   // validate user
   try {

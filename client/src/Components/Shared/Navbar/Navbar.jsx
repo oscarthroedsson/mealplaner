@@ -1,5 +1,6 @@
 // import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Navbar() {
@@ -34,7 +35,7 @@ export default function Navbar() {
       {menuVisible && (
         <ul className="px-4 py-8 bg-one space-y-2 shadow-lg shadow-slate-100">
           <li className="hover:underline hover:underline-offset-8 hover:decoration-green-500 hover:border-b-10">
-            <a href="#">Meal Plans</a>
+            <a href="/mealplans">Meal Plans</a>
           </li>
           <li className="hover:underline hover:underline-offset-8 hover:decoration-green-500 hover:border-b-10">
             <a href="#">Recipes</a>

@@ -10,7 +10,7 @@ export async function recipeModel(recipe) {
   return {
     id: recipe.id,
     title: recipe.title,
-    image: "https://spoonacular.com/recipeImages/665182-556x370.jpg",
+    image: recipe.image,
     timeToCook: recipe.readyInMinutes,
     serverings: recipe.servings > 1 ? 1 : recipe.servings, //kan användas för att anpassa allting //! Kan få fler än en serving.....
     nutrients: await getNutritionDetails(recipe.id, recipe.servings), //send in ID from the same object
