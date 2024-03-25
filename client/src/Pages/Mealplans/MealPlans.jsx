@@ -1,5 +1,3 @@
-"use client";
-
 // functions
 
 import { useEffect, useState } from "react";
@@ -14,6 +12,7 @@ import SecondaryButton from "../../Components/Shared/Buttons/SecondaryButton.jsx
 import { getCookieUser } from "../../config/cookies/cookie_config.js";
 import { getMealplans } from "../../Api/mealpan_Api.js";
 import { activityLevels } from "../../assets/data/activity.js";
+import { EllipsMenuButton } from "../../Components/Shared/Buttons/iconButtons/EllipsMenuButton.jsx";
 
 /*
 KOMPONENTEN SKA GENERERA ALLA KOSTPLANER SOM HAR GENERERATS TILL ANVÄNDAREN
@@ -57,15 +56,19 @@ export default function MealPlans() {
     console.log("want to view mealplan");
   }
 
+  function handleLike() {
+    console.log("it was liked");
+  }
+
   return (
     <>
-      <main className="flex flex-col gap-10">
+      <main className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 place-content-between my-6 sm:place-content-end sm:gap-6">
           <PrimeButton textContent="Build a meal plan" href="#" />
           <SecondaryButton textContent="Generate a mealplan" href="#" />
         </div>
 
-        <section className="flex flex-col gap-9 text-txtColor">
+        <section className="flex flex-col gap-4 text-txtColor">
           <div className="p-4 bg-two gap-1 space-y-4 rounded-lg">
             <div className="flex items-start flex-col  text-[#394867]">
               {user && (
@@ -120,39 +123,37 @@ export default function MealPlans() {
           </div>
           {mealplans !== null && (
             <>
-              <div className="space-y-4">
-                <div className="">
-                  <img src={pannkaka} alt="" />
-                  <div className="flex flex-row-reverse justify-between mt-2">
-                    <div className="flex gap-4">
-                      <p>Heart</p>
-                      <p>Share</p>
+              {mealplans.map((nutritionMeal) => {
+                console.log("mealplan: ", nutritionMeal);
+                return (
+                  <>
+                    <h3 className="mt-6">Your Mealplans</h3>
+                    <div key={nutritionMeal.id} className=" bg-one">
+                      <div className="">
+                        <div className="relative">
+                          <img src={pannkaka} alt="" className="rounded-t-lg h-1/3" />
+                        </div>
+                        <div className="flex justify-around  bg-two rounded-b-lg drop-shadow-sm relative">
+                          <div className="flex items-center gap-2 my-2">
+                            <p className="text-2xl">🍽️</p>
+                            <p className="text-base">{`${Object.keys(nutritionMeal.mealplan).length - 2} meals`}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <p className="text-2xl">🌿</p>
+                            <p className="text-base">Vegeterian</p>
+                          </div>
+                          <div className="flex  items-center ">
+                            <EllipsMenuButton className=" w-6 " />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col mt-2">
+                        <PrimeButton textContent="View mealplan" onClick={viewMealplan} />
+                      </div>
                     </div>
-                    <p>Delete</p>
-                  </div>
-                </div>
-                <div>
-                  <table className="flex w-full justify-between align-center">
-                    <tr className="flex flex-col w-1/3">
-                      <td>Protein</td>
-                      <td>99g</td>
-                    </tr>
-                    <tr className="flex flex-col w-1/3">
-                      <td>Carbs</td>
-                      <td>999g</td>
-                    </tr>
-                    <tr className="flex flex-col w-1/3">
-                      <td>Fat</td>
-                      <td>99g</td>
-                    </tr>
-                  </table>
-                  <div className="flex gap-10">
-                    <p>Model</p>
-                    <p>Not plant based</p>
-                  </div>
-                  <PrimeButton textContent="View" onClick={viewMealplan} />
-                </div>
-              </div>
+                  </>
+                );
+              })}
             </>
           )}
         </section>

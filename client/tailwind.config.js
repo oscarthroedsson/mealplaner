@@ -14,12 +14,12 @@ export default {
       colors: {
         one: "#F7FBFC",
         two: "#F1F6F9",
+
         // Andra färger...
         main: "#04BE68",
         mainHover: "#04af5f",
         mainActive: "#079253",
 
-        txtTest: "red",
         txtColor: "#212A3E",
         txtColorTwo: "#1E3059",
         txtInput: "#616773",

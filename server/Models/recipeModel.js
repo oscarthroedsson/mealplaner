@@ -1,7 +1,5 @@
 import { getNutritionDetails } from "../Api/create_mealplan/getNutritionDetails.js";
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 /**
  * @description
  * @param {object} recipe Takes an recipe obj from: getRecipeInfo() → not modyfied

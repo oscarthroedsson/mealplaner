@@ -1,4 +1,5 @@
 import { recipeModel } from "../../Models/recipeModel.js";
+import { delay } from "../../Tools/delay.js";
 
 /**
  * @description Takes in an array containing IDs of recipes and returns array of fully recipe objects in the array
@@ -10,8 +11,7 @@ export async function getRecipeInfo(arrayOfId) {
   const apiKey = process.env.API_KEY || "?apiKey=70b1469bc39d4fbcadbf282a070d81ac";
   const meals = [];
 
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms)); //# DELAY THE API CALLS
-  console.log("arrayOfId: ", arrayOfId);
+  delay(500);
   for (let i = 0; i < arrayOfId.length; i++) {
     try {
       const res = await fetch(`https://api.spoonacular.com/recipes/${arrayOfId[i]}/information/${apiKey}`);
