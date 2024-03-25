@@ -17,9 +17,16 @@ export async function getRecipeInfo(arrayOfId) {
       const res = await fetch(`https://api.spoonacular.com/recipes/${arrayOfId[i]}/information/${apiKey}`);
 
       if (res.ok) {
+        /*
+        creates the recipe that will be added in the meal, ex:
+        mealplan:[
+          breakfast:{
+            here
+          }
+        ]
+        */
         const information = await res.json();
         const recipes = await recipeModel(information);
-
         meals.push(recipes);
       } else {
         console.log("RESPONSE CODE in getRecipeInfo | ", res);

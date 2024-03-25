@@ -1,10 +1,7 @@
 import prisma from "../../prisma.js";
 
 export const addFoodpreferenceToUser = async (foodprefData) => {
-  console.log(
-    "SERVER | Services | addFoodpreferenceToUser | foodprefData: ",
-    foodprefData
-  );
+  console.log("SERVER | Services | addFoodpreferenceToUser | foodprefData: ", foodprefData);
 
   const addedPreference = await prisma.foodpreference.create({
     data: {
@@ -31,6 +28,7 @@ export const addFoodpreferenceToUser = async (foodprefData) => {
 
 export const getFoodPreference = async (userId) => {
   console.log("getFoodPreference | userId: ", userId);
+
   return await prisma.foodpreference.findUniqueOrThrow({
     where: {
       userId: userId,

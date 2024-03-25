@@ -8,6 +8,7 @@ import { useState } from "react";
 import { doesCookieUser } from "../../config/cookies/cookie_config.js";
 import { createMealplan } from "../../Api/mealpan_Api.js";
 import { useNavigate } from "react-router-dom";
+import { Toaster } from "../../Components/Shared/Toaster/Toaster.jsx";
 
 // hooks
 export default function HomePage() {
@@ -43,6 +44,7 @@ export default function HomePage() {
   return (
     <>
       <main>
+        <Toaster />
         <section className="text-center space-y-4">
           <h1>FREE MEALPLAN GENERATOR</h1>
           <p className="pb-2">

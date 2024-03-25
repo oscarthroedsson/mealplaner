@@ -10,7 +10,7 @@ import moment from "moment";
 
 import { createMealPlan } from "../Api/create_mealplan/createMealplan.js";
 import { getFoodPreference } from "../Services/Foodpreference_Services/foodpreferenceServices.js";
-import { getMealplans } from "../Services/Mealplan_Services/getMealplan.js";
+import { deleteMealplan, getMealplan, getMealplans } from "../Services/Mealplan_Services/getMealplan.js";
 import { storeMealplan } from "../Services/Mealplan_Services/storeMealplan.js";
 import { getUser } from "../Services/User_Services/userServices.js";
 
@@ -18,24 +18,42 @@ export const create = async (req, res) => {
   const { id: userId } = req.body;
 
   const { energy_intake: energyNeed } = await getUser(userId);
-  console.log("⚡️ Energyneed: ", energyNeed);
+
   if (!energyNeed) {
     res.status(400).send({
       status: "error",
       message: `Problem finding usre with id: ${userId} in the DBs`,
     });
   }
-
+  let foodPref = null;
   try {
-    const foodPref = await getFoodPreference(userId);
+    foodPref = await getFoodPreference(userId);
+  } catch (err) {
+    res.status(400).send({
+      message: "error",
+      data: "user not found",
+      error: err,
+    });
+  }
 
-    // Take out the intolerance from an array of objects to an array with string of the intolerance
-    foodPref.Intolerances = foodPref.Intolerances.map((intolerance) => intolerance.name);
-
+  // Take out the intolerance from an array of objects to an array with string of the intolerance
+  foodPref.Intolerances = foodPref.Intolerances.map((intolerance) => intolerance.name);
+  try {
     const mealplan = await createMealPlan(foodPref, energyNeed);
     mealplan.userId = userId; // add the users ID to the whole mealplan
+    mealplan.plateModel = foodPref.pref_MealModels; // which diet we find meals of(vegeterian, and so on)
     mealplan.createdAt = moment().format("YYYY-MM-DD"); // gives time when mealplan is created
-    await storeMealplan(mealplan);
+    mealplan.numOfMeals = foodPref.meals_PerDayIs;
+
+    try {
+      await storeMealplan(mealplan);
+    } catch (err) {
+      res.status().send({
+        message: "error",
+        data: "storing mealplan failed",
+        error: err,
+      });
+    }
 
     res.send({
       message: `success`,
@@ -82,6 +100,44 @@ export const show = async (req, res) => {
       message: "error",
       code: 400,
       data: "User Could not be found",
+    });
+  }
+};
+
+export const destroy = async (req, res) => {
+  console.log("req.body: ", req.body);
+  const userId = req.body.userId;
+  const mealplanID = req.body.mealplanID;
+
+  console.log("userId: ", userId);
+  console.log("mealplanID: ", mealplanID);
+
+  // validate user
+  try {
+    await getUser(userId, false);
+  } catch (err) {
+    res.status(400).send({
+      message: "error",
+      code: 400,
+      data: "We couldn´t find the user",
+    });
+  }
+
+  // if user OK delete mealplan
+  try {
+    const deletedMealplan = deleteMealplan(userId, mealplanID);
+
+    if (deletedMealplan) {
+      res.status(200).send({
+        message: "success",
+        data: [],
+      });
+      return;
+    }
+  } catch (err) {
+    res.status(400).send({
+      message: "error",
+      data: "We couldn´t delete the mealplan",
     });
   }
 };

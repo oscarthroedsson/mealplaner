@@ -3,7 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      sm: "480px",
+      sm: "480px", // xs
+      custom: "528px", // sm
       md: "768px",
       lg: "976px",
       xl: "1440px",
@@ -14,6 +15,10 @@ export default {
       colors: {
         one: "#F7FBFC",
         two: "#F1F6F9",
+
+        // border colors
+        borderOne: "#e4edf2",
+        borderTwo: "#dae3e8",
 
         // Andra färger...
         main: "#04BE68",

@@ -64,12 +64,28 @@ export const getMealplans = async (userId) => {
     const mealplans = await response.json();
 
     if (mealplans) {
-      console.log("mealplans was returned");
       return mealplans.data;
     } else {
       console.log("handle Error");
     }
   } catch (err) {
     console.log("err: ", err);
+  }
+};
+
+export const destroyMealplan = async (mealplanID, userId) => {
+  try {
+    const respone = await fetch("http://localhost:3000/mealplan/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        mealplanID,
+      }),
+    });
+  } catch (err) {
+    console.log("destroyMealplan | ", err);
   }
 };

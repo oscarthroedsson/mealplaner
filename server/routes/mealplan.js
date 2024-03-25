@@ -21,10 +21,12 @@ create
  * Import every file in routes that controll the specific routes
  */
 
-import { create, show } from "../Controllers/mealplan.js";
+import { create, show, destroy } from "../Controllers/mealplan.js";
 
 router.post("/create", create);
 
 router.post("/get", show);
+
+router.delete("/delete", destroy);
 
 export default router;
