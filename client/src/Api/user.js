@@ -11,3 +11,16 @@ export const registerUser = async (userData) => {
 
   return user;
 };
+
+export const getUser = async (userId, includeFoodPref = true) => {
+  const response = await fetch(`http://localhost:3000/user/get`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", // Ange innehållstypen till JSON
+    },
+    body: JSON.stringify({ userId, includeFoodPref }),
+  });
+
+  const userProfile = await response.json();
+  return userProfile;
+};

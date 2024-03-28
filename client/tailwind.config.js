@@ -83,6 +83,7 @@ export default {
         },
         main: {
           padding: "8px 16px", // Standardstorlek
+
           "@screen md": {
             padding: "16px 32px",
           },

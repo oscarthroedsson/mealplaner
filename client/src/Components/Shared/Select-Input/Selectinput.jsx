@@ -7,9 +7,9 @@ import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 
 /* eslint-disable react/prop-types */
 export default function Selectinput({ onSelect, text, options }) {
+  console.log("text: ", text);
   const [showDropdown, setShowDropDown] = useState(false);
-  const [placeholder, setPlaceholder] = useState(text ? text : "no props");
-  // WRITE YOUR OPTIONS HERE
+  const [placeholder, setPlaceholder] = useState(text);
 
   return (
     <>
@@ -27,11 +27,7 @@ export default function Selectinput({ onSelect, text, options }) {
           }}
         >
           <span className="selected-value text-base">{placeholder}</span>
-          <span
-            className={`material-icons-outlined ${
-              showDropdown ? "rotate-180" : ""
-            } text-green-500`}
-          >
+          <span className={`material-icons-outlined ${showDropdown ? "rotate-180" : ""} text-green-500`}>
             <ArrowDropDownRoundedIcon className="text-2xl" />
           </span>
         </button>

@@ -7,7 +7,7 @@ export const destroy = async (req, res) => {};
 */
 
 import { userGenerator } from "../Generator/userGenerator.js";
-import { registerUser } from "../Services/User_Services/userServices.js";
+import { getUser, registerUser } from "../Services/User_Services/userServices.js";
 
 //get active user
 export const index = async (req, res) => {
@@ -35,6 +35,26 @@ export const storeUser = async (req, res) => {
   }
 };
 
-export const showUser = (userId) => {
-  return getUser(userId, false);
+export const showUser = async (req, res) => {
+  const userId = req.body.userId;
+  const includeFoodPref = req.body.includeFoodPref;
+  console.log({ userId, includeFoodPref });
+
+  try {
+    const user = await getUser(userId, includeFoodPref);
+
+    if (user) {
+      res.status(200).send({
+        status: "success",
+        data: user,
+      });
+    }
+  } catch (err) {
+    console.log("err: ", err);
+    res.status(404).send({
+      status: "error",
+      message: "Something went wrong querying the user",
+      error: err,
+    });
+  }
 };

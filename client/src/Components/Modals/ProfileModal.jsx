@@ -34,7 +34,6 @@ export default function ProfilModal() {
   const [activityLevel, setActivityLevel] = useState(0);
   const [goalIs, setGoalIs] = useState("");
   const [getGoalTempo, setGetGoalTempo] = useState(0);
-
   const [feet, setFeet] = useState(0);
   const [centimeter, setCentimeter] = useState(0);
   const [inches, setInches] = useState(0);

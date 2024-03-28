@@ -24,6 +24,7 @@ export const deleteCookieUser = async () => {};
 export const getCookieUser = async () => {
   const userCookie = await Cookies.get("user");
   console.log("userCookie: ", userCookie);
+
   if (userCookie) {
     const user = await JSON.parse(userCookie);
     return user;

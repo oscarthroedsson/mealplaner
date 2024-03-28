@@ -12,17 +12,15 @@ export const registerUser = async (userData) => {
  * @description Get user threw prisma from DB
  */
 export const getUser = async (userId, includeTolerance = true) => {
-  console.log("SERVER registerUser | ", userId);
-
   return await prisma.user.findUnique({
     where: {
       id: userId,
     },
     include: {
-      //include all relations that we want
+      // Include all relations that we want
       foodpreference: {
         include: {
-          Intolerances: includeTolerance,
+          Intolerances: includeTolerance, // This line was incorrect
         },
       },
     },

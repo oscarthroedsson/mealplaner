@@ -19,7 +19,7 @@ destroy,
  * Import every file in routes that controll the specific routes
  */
 
-import { storeUser } from "../Controllers/user.js";
+import { storeUser, showUser } from "../Controllers/user.js";
 
 /*
 # Generators
@@ -27,5 +27,6 @@ Making sure that every key-pair-value is the right value for the database. If no
 */
 
 router.post("/register", storeUser);
+router.post("/get", showUser);
 
 export default router;
